@@ -39,8 +39,8 @@ class RelativePositionBias(nn.Module):
     def forward(self, qlen, klen):
         """ Compute binned relative position bias """
         device = self.relative_attention_bias.weight.device
-        q_pos = torch.arange(qlen, dtype = torch.long, device = device)
-        k_pos = torch.arange(klen, dtype = torch.long, device = device)
+        q_pos = torch.arange(qlen, dtype=torch.long, device=device)
+        k_pos = torch.arange(klen, dtype=torch.long, device=device)
         relative_position = k_pos[None, :] - q_pos[:, None]
         """
                    k

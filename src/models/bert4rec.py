@@ -8,17 +8,17 @@ from .new_transformer import TransformerBlock
 
 class BERT(pl.LightningModule):
     def __init__(self,
-        max_len: int = None,
-        num_items: int = None,
-        n_layer: int = None,
-        n_head: int = None,
-        n_b: int = None,
-        d_model: int = None,
-        dropout: float = .0,
-        battn: bool = None,
-        bpff: bool = None,
-        brpb: bool = None, 
-    ):
+                 max_len: int = None,
+                 num_items: int = None,
+                 n_layer: int = None,
+                 n_head: int = None,
+                 n_b: int = None,
+                 d_model: int = None,
+                 dropout: float = .0,
+                 battn: bool = None,
+                 bpff: bool = None,
+                 brpb: bool = None,
+                 ):
         super().__init__()
         self.d_model = d_model
         self.num_items = num_items
@@ -26,8 +26,8 @@ class BERT(pl.LightningModule):
         self.battn = battn
         self.bpff = bpff
         self.brpb = brpb
-        
-        vocab_size = num_items + 1 + n_b # add padding and mask 
+
+        vocab_size = num_items + 1 + n_b  # add padding and mask
         # if self.brpb:
         if True:
             # simple embedding, adding behavioral relative positional bias in transformer blocks

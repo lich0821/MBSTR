@@ -6,20 +6,19 @@ from .embedding import BERTEmbedding
 from .transformer import TransformerBlock
 
 
-
 class SAS(pl.LightningModule):
     def __init__(self,
-        max_len,
-        num_items,
-        n_layer,
-        n_head,
-        d_model,
-        dropout
-    ):
+                 max_len,
+                 num_items,
+                 n_layer,
+                 n_head,
+                 d_model,
+                 dropout
+                 ):
         super().__init__()
         self.d_model = d_model
         self.num_items = num_items
-        
+
         vocab_size = num_items + 1
         self.embedding = BERTEmbedding(vocab_size=vocab_size, embed_size=d_model, max_len=max_len, dropout=dropout)
         # multi-layers transformer blocks, deep network
@@ -28,7 +27,7 @@ class SAS(pl.LightningModule):
 
     def forward(self, x):
         mask = (x > 0).unsqueeze(1).repeat(1, x.size(1), 1).unsqueeze(1)
-        tl = x.shape[1] # time dim len for enforce causality
+        tl = x.shape[1]  # time dim len for enforce causality
         mask *= torch.tril(torch.ones((tl, tl), dtype=torch.bool, device=self.device))
         # embedding the indexed sequence to sequence of vectors
         x = self.embedding(x)

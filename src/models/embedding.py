@@ -1,8 +1,9 @@
 
 from torch import nn as nn
 
+
 class PositionalEmbedding(nn.Module):
-    
+
     def __init__(self, max_len, d_model):
         super().__init__()
         self.pe = nn.Embedding(max_len, d_model)
@@ -11,13 +12,14 @@ class PositionalEmbedding(nn.Module):
     def forward(self, x):
         batch_size = x.size(0)
         return self.pe.weight.unsqueeze(0).repeat(batch_size, 1, 1)
-    
+
     def _init_weights(self, module):
         """Initialize the weights."""
         if isinstance(module, nn.Embedding):
             module.weight.data.normal_(mean=0.0, std=0.02)
             if module.padding_idx is not None:
                 module.weight.data[module.padding_idx].zero_()
+
 
 class BERTEmbedding(nn.Module):
     """
@@ -26,6 +28,7 @@ class BERTEmbedding(nn.Module):
         2. PositionalEmbedding : adding positional information using sin, cos
         sum of all these features are output of BERTEmbedding
     """
+
     def __init__(self, vocab_size, embed_size, max_len, dropout=0.1):
         """
         :param vocab_size: total vocab size
@@ -42,7 +45,7 @@ class BERTEmbedding(nn.Module):
     def forward(self, sequence):
         x = self.token(sequence) + self.position(sequence)
         return self.dropout(x)
-    
+
     def _init_weights(self, module):
         """Initialize the weights."""
         if isinstance(module, nn.Embedding):
@@ -56,6 +59,7 @@ class SimpleEmbedding(nn.Module):
     BERT Embedding which is consisted with under features
         1. TokenEmbedding : normal embedding matrix
     """
+
     def __init__(self, vocab_size, embed_size, dropout=0.1):
         """
         :param vocab_size: total vocab size
@@ -71,7 +75,7 @@ class SimpleEmbedding(nn.Module):
     def forward(self, sequence):
         x = self.token(sequence)
         return self.dropout(x)
-    
+
     def _init_weights(self, module):
         """Initialize the weights."""
         if isinstance(module, nn.Embedding):

@@ -3,6 +3,7 @@ from .base import AbstractDataset
 
 import pandas as pd
 
+
 class IjcaiDataset(AbstractDataset):
     @classmethod
     def code(cls):

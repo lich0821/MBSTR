@@ -4,6 +4,7 @@ from typing import List, Union
 from .datasets import dataset_factory
 from .dataloaders import RecDataloader
 
+
 class RecDataModule(pl.LightningDataModule):
     def __init__(
         self,
@@ -44,7 +45,7 @@ class RecDataModule(pl.LightningDataModule):
             self.target_behavior,
             self.multi_behavior,
             self.min_uc,
-            )
+        )
 
     def setup(self, stage):
         # make assignments here (val/train/test split)
@@ -54,8 +55,8 @@ class RecDataModule(pl.LightningDataModule):
             self.target_behavior,
             self.multi_behavior,
             self.min_uc,
-            )
-    
+        )
+
         self.dataloader = RecDataloader(
             self.dataset,
             self.max_len,
@@ -71,8 +72,10 @@ class RecDataModule(pl.LightningDataModule):
 
     def train_dataloader(self):
         return self.dataloader.get_train_loader()
+
     def val_dataloader(self):
         return self.dataloader.get_val_loader()
+
 
 class RecDataModuleNeg(pl.LightningDataModule):
     def __init__(
@@ -118,7 +121,7 @@ class RecDataModuleNeg(pl.LightningDataModule):
             self.target_behavior,
             self.multi_behavior,
             self.min_uc,
-            )
+        )
 
     def setup(self, stage):
         # make assignments here (val/train/test split)
@@ -128,8 +131,8 @@ class RecDataModuleNeg(pl.LightningDataModule):
             self.target_behavior,
             self.multi_behavior,
             self.min_uc,
-            )
-    
+        )
+
         self.dataloader = RecDataloaderNeg(
             self.dataset,
             self.max_len,
@@ -147,5 +150,6 @@ class RecDataModuleNeg(pl.LightningDataModule):
 
     def train_dataloader(self):
         return self.dataloader.get_train_loader()
+
     def val_dataloader(self):
         return self.dataloader.get_val_loader()

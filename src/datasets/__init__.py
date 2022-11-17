@@ -18,6 +18,6 @@ def dataset_factory(
         target_behavior,
         multi_behavior,
         min_uc,
-        ):
+):
     dataset = DATASETS[dataset_code]
     return dataset(target_behavior, multi_behavior, min_uc)

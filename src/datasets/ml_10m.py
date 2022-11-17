@@ -4,6 +4,7 @@ from .base import AbstractDataset
 
 import pandas as pd
 
+
 class ML10MDataset(AbstractDataset):
     @classmethod
     def code(cls):

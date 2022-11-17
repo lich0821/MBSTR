@@ -15,7 +15,7 @@ class RandomNegativeSampler(AbstractNegativeSampler):
     def generate_negative_samples(self):
         negative_samples = {}
         print('Sampling negative items')
-        for user in trange(1, self.user_count+1):
+        for user in trange(1, self.user_count + 1):
             if user not in self.val.keys():
                 continue
             seen = set(self.train[user])

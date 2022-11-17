@@ -10,12 +10,13 @@ from abc import *
 from pathlib import Path
 import pickle
 
+
 class AbstractDataset(metaclass=ABCMeta):
     def __init__(self,
-            target_behavior,
-            multi_behavior,
-            min_uc
-        ):
+                 target_behavior,
+                 multi_behavior,
+                 min_uc
+                 ):
         self.target_behavior = target_behavior
         self.multi_behavior = multi_behavior
         self.min_uc = min_uc
@@ -84,14 +85,14 @@ class AbstractDataset(metaclass=ABCMeta):
 
     def densify_index(self, df):
         print('Densifying index')
-        umap = {u: (i+1) for i, u in enumerate(set(df['uid']))}
-        smap = {s: (i+1) for i, s in enumerate(set(df['sid']))}
-        bmap = {b: (i+1) for i, b in enumerate(set(df['behavior']))}
+        umap = {u: (i + 1) for i, u in enumerate(set(df['uid']))}
+        smap = {s: (i + 1) for i, s in enumerate(set(df['sid']))}
+        bmap = {b: (i + 1) for i, b in enumerate(set(df['behavior']))}
         df['uid'] = df['uid'].map(umap)
         df['sid'] = df['sid'].map(smap)
         df['behavior'] = df['behavior'].map(bmap)
         return df, umap, smap, bmap
-    
+
     # def densify_index(self, df):
     #     print('Densifying index')
     #     umap = {u: u for u in set(df['uid'])}
@@ -100,7 +101,7 @@ class AbstractDataset(metaclass=ABCMeta):
     #     df['behavior'] = df['behavior'].map(bmap)
     #     return df, umap, smap, bmap
 
-    def split_df(self, df, user_count):      
+    def split_df(self, df, user_count):
         if self.split == 'leave_one_out':
             print('Splitting')
             user_group = df.groupby('uid')
@@ -111,7 +112,7 @@ class AbstractDataset(metaclass=ABCMeta):
             user2items = user_group.progress_apply(lambda d: list(d['sid']))
             user2behaviors = user_group.progress_apply(lambda d: list(d['behavior']))
             train, train_b, val, val_b, = {}, {}, {}, {}
-            for user in range(1, user_count+1):
+            for user in range(1, user_count + 1):
                 items = user2items[user]
                 behaviors = user2behaviors[user]
                 # only evaluate the target behavior

@@ -4,6 +4,7 @@ from .base import AbstractDataset
 
 import pandas as pd
 
+
 class YelpDataset(AbstractDataset):
     @classmethod
     def code(cls):

@@ -1,6 +1,7 @@
 
 import torch
 
+
 def recall(scores, labels, k):
     scores = scores.cpu()
     labels = labels.cpu()
@@ -16,7 +17,7 @@ def ndcg(scores, labels, k):
     rank = (-scores).argsort(dim=1)
     cut = rank[:, :k]
     hits = labels.gather(1, cut)
-    position = torch.arange(2, 2+k)
+    position = torch.arange(2, 2 + k)
     weights = 1 / torch.log2(position.float())
     dcg = (hits.float() * weights).sum(1)
     idcg = torch.Tensor([weights[:min(n, k)].sum() for n in labels.sum(1)])
@@ -35,18 +36,19 @@ def recalls_and_ndcgs_for_ks(scores, labels, ks):
     rank = (-scores).argsort(dim=1)
     cut = rank
     for k in sorted(ks, reverse=True):
-       cut = cut[:, :k]
-       hits = labels_float.gather(1, cut)
-       metrics['Recall@%d' % k] = (hits.sum(1) / answer_count_float).mean().item()
+        cut = cut[:, :k]
+        hits = labels_float.gather(1, cut)
+        metrics['Recall@%d' % k] = (hits.sum(1) / answer_count_float).mean().item()
 
-       position = torch.arange(2, 2+k)
-       weights = 1 / torch.log2(position.float())
-       dcg = (hits * weights).sum(1)
-       idcg = torch.Tensor([weights[:min(n, k)].sum() for n in answer_count])
-       ndcg = (dcg / idcg).mean()
-       metrics['NDCG@%d' % k] = ndcg
+        position = torch.arange(2, 2 + k)
+        weights = 1 / torch.log2(position.float())
+        dcg = (hits * weights).sum(1)
+        idcg = torch.Tensor([weights[:min(n, k)].sum() for n in answer_count])
+        ndcg = (dcg / idcg).mean()
+        metrics['NDCG@%d' % k] = ndcg
 
     return metrics
+
 
 def split_at_index(dim, index, t):
     pre_slices = (slice(None),) * dim

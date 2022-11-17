@@ -3,6 +3,7 @@ from .base import AbstractDataset
 
 import pandas as pd
 
+
 class RetailDataset(AbstractDataset):
     @classmethod
     def code(cls):
