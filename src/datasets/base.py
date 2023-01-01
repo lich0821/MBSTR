@@ -12,11 +12,7 @@ import pickle
 
 
 class AbstractDataset(metaclass=ABCMeta):
-    def __init__(self,
-                 target_behavior,
-                 multi_behavior,
-                 min_uc
-                 ):
+    def __init__(self, target_behavior, multi_behavior, min_uc):
         self.target_behavior = target_behavior
         self.multi_behavior = multi_behavior
         self.min_uc = min_uc

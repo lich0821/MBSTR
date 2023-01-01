@@ -40,35 +40,24 @@ class RecDataModule(pl.LightningDataModule):
     def prepare_data(self):
         # download, split, etc...
         # only called on 1 GPU/TPU in distributed
-        dataset_factory(
-            self.dataset_code,
-            self.target_behavior,
-            self.multi_behavior,
-            self.min_uc,
-        )
+        dataset_factory(self.dataset_code, self.target_behavior, self.multi_behavior, self.min_uc)
 
     def setup(self, stage):
         # make assignments here (val/train/test split)
         # called on every process in DDP
-        self.dataset = dataset_factory(
-            self.dataset_code,
-            self.target_behavior,
-            self.multi_behavior,
-            self.min_uc,
-        )
+        self.dataset = dataset_factory(self.dataset_code, self.target_behavior, self.multi_behavior, self.min_uc)
 
-        self.dataloader = RecDataloader(
-            self.dataset,
-            self.max_len,
-            self.mask_prob,
-            self.num_items,
-            self.num_workers,
-            self.val_negative_sampler_code,
-            self.val_negative_sample_size,
-            self.train_batch_size,
-            self.val_batch_size,
-            self.predict_only_target,
-        )
+        self.dataloader = RecDataloader(self.dataset,
+                                        self.max_len,
+                                        self.mask_prob,
+                                        self.num_items,
+                                        self.num_workers,
+                                        self.val_negative_sampler_code,
+                                        self.val_negative_sample_size,
+                                        self.train_batch_size,
+                                        self.val_batch_size,
+                                        self.predict_only_target,
+                                        )
 
     def train_dataloader(self):
         return self.dataloader.get_train_loader()
@@ -116,22 +105,12 @@ class RecDataModuleNeg(pl.LightningDataModule):
     def prepare_data(self):
         # download, split, etc...
         # only called on 1 GPU/TPU in distributed
-        dataset_factory(
-            self.dataset_code,
-            self.target_behavior,
-            self.multi_behavior,
-            self.min_uc,
-        )
+        dataset_factory(self.dataset_code, self.target_behavior, self.multi_behavior, self.min_uc)
 
     def setup(self, stage):
         # make assignments here (val/train/test split)
         # called on every process in DDP
-        self.dataset = dataset_factory(
-            self.dataset_code,
-            self.target_behavior,
-            self.multi_behavior,
-            self.min_uc,
-        )
+        self.dataset = dataset_factory(self.dataset_code, self.target_behavior, self.multi_behavior, self.min_uc)
 
         self.dataloader = RecDataloaderNeg(
             self.dataset,

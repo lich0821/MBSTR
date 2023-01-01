@@ -7,10 +7,7 @@ from .utils import recalls_and_ndcgs_for_ks
 
 
 class RecModel(pl.LightningModule):
-    def __init__(self,
-                 backbone: BERT,
-                 b_head: bool = False,
-                 ):
+    def __init__(self, backbone: BERT, b_head: bool = False):
         super().__init__()
         self.backbone = backbone
         self.n_b = backbone.n_b

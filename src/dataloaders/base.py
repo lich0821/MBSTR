@@ -5,11 +5,7 @@ from abc import *
 
 
 class AbstractDataloader(metaclass=ABCMeta):
-    def __init__(self,
-                 dataset,
-                 val_negative_sampler_code,
-                 val_negative_sample_size
-                 ):
+    def __init__(self, dataset, val_negative_sampler_code, val_negative_sample_size):
         save_folder = dataset._get_preprocessed_folder_path()
         dataset = dataset.load_dataset()
         self.train = dataset['train']
