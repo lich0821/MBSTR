@@ -15,8 +15,8 @@ model:
   b_head: True
 
 data:
-  dataset_code: 'yelp'
-  target_behavior: 'pos'
+  dataset_code: "yelp"
+  target_behavior: "pos"
   multi_behavior: True
   min_uc: 3
   num_items: 22734
@@ -25,8 +25,8 @@ data:
   num_workers: 4
   val_negative_sampler_code: random
   val_negative_sample_size: 99
-  train_batch_size: 128
-  val_batch_size: 128
+  train_batch_size: 1024
+  val_batch_size: 1024
   predict_only_target: False
 
 trainer:
@@ -34,11 +34,13 @@ trainer:
   callbacks:
     - class_path: pytorch_lightning.callbacks.EarlyStopping
       init_args:
-        monitor: 'Val:NDCG@10'
+        monitor: "Val:NDCG@10"
         patience: 30
-        mode: max  
-  gpus: '1'
-  accelerator: ddp
+        mode: max
+  gpus: "0,1"
+  max_epochs: 30
+  log_every_n_steps: 5
+  strategy: ddp_find_unused_parameters_false
 seed_everything: 42
 
 optimizer:
