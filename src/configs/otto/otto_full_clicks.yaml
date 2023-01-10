@@ -16,7 +16,7 @@ model:
 
 data:
   dataset_code: "otto"
-  target_behavior: "orders"
+  target_behavior: "clicks"
   multi_behavior: True
   min_uc: 3
   num_items: 1115265
@@ -25,7 +25,7 @@ data:
   num_workers: 4
   val_negative_sampler_code: random
   val_negative_sample_size: 99
-  train_batch_size: 2048
+  train_batch_size: 320
   val_batch_size: 2048
   predict_only_target: False
 
