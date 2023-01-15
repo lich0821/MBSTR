@@ -52,7 +52,8 @@ class AbstractDataset(metaclass=ABCMeta):
         df, umap, smap, bmap = self.densify_index(df)
         df = self.filter_triplets(df) # Densify first, and then filter.
         self.bmap = bmap
-        train, train_b, val, val_b, val_num = self.split_df(df, len(umap))
+        user_count = len(df["uid"].unique().tolist())
+        train, train_b, val, val_b, val_num = self.split_df(df, user_count)
         dataset = {'train': train,
                    'val': val,
                    'train_b': train_b,
