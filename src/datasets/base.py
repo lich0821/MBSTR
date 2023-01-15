@@ -50,10 +50,9 @@ class AbstractDataset(metaclass=ABCMeta):
         df = self.make_implicit(df)
         # df = self.filter_triplets(df)
         df, umap, smap, bmap = self.densify_index(df)
-        df = self.filter_triplets(df) # Densify first, and then filter.
+        df = self.filter_triplets(df)  # Densify first, and then filter.
         self.bmap = bmap
-        user_count = len(df["uid"].unique().tolist())
-        train, train_b, val, val_b, val_num = self.split_df(df, user_count)
+        train, train_b, val, val_b, val_num = self.split_df(df, None)
         dataset = {'train': train,
                    'val': val,
                    'train_b': train_b,
@@ -107,10 +106,16 @@ class AbstractDataset(metaclass=ABCMeta):
             # if you use random permuted df, you need to use the following lines of code.
             # user2items = user_group.progress_apply(lambda d: list(d.sort_values(by='timestamp')['sid']))
             # user2behaviors = user_group.progress_apply(lambda d: list(d.sort_values(by='timestamp')['behavior']))
-            user2items = user_group.progress_apply(lambda d: list(d['sid']))
-            user2behaviors = user_group.progress_apply(lambda d: list(d['behavior']))
+
+            # Make it faster
+            user2items = user_group["sid"].agg(list)
+            user2behaviors = user_group["behavior"].agg(list)
+            # user2items = user_group.progress_apply(lambda d: list(d['sid']))
+            # user2behaviors = user_group.progress_apply(lambda d: list(d['behavior']))
+
             train, train_b, val, val_b, = {}, {}, {}, {}
-            for user in range(1, user_count + 1):
+            # for user in range(1, user_count + 1):
+            for user in user2items.index: # Remove user_count
                 items = user2items[user]
                 behaviors = user2behaviors[user]
                 # only evaluate the target behavior
