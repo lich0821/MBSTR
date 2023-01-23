@@ -8,7 +8,7 @@ model:
       n_b: 4
       dropout: 0.2
       n_layer: 2
-      num_items: 1115265
+      num_items: 1825736
       battn: True
       bpff: True
       brpb: True
@@ -16,16 +16,16 @@ model:
 
 data:
   dataset_code: "otto"
-  target_behavior: "clicks"
+  target_behavior: "orders"
   multi_behavior: True
   min_uc: 3
-  num_items: 1115265
+  num_items: 1825736
   max_len: 50
-  mask_prob: 0.2
+  mask_prob: 0.4
   num_workers: 4
   val_negative_sampler_code: random
   val_negative_sample_size: 99
-  train_batch_size: 320
+  train_batch_size: 256
   val_batch_size: 2048
   predict_only_target: False
 
