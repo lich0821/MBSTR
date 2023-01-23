@@ -15,5 +15,5 @@ class OttoDataset(AbstractDataset):
         folder_path = self._get_rawdata_root_path()
         file_path = folder_path.joinpath("otto.txt")
         df = pd.read_csv(file_path, sep="\t", header=None)
-        df.columns = ["uid", "sid", "behavior", "timestamp"]
+        df.columns = ["uid", "sid", "timestamp", "behavior"]
         return df
